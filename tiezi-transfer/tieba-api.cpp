@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "app.h"
 #include<regex>
 
@@ -19,7 +20,25 @@ HttpConnection::HttpConnection() {
 };
 HttpConnection::~HttpConnection() {
     curl_easy_cleanup(curl_);
+    curl_global_cleanup();
 };
+int HttpConnection::DownloadFile(const std::string& url, const std::string& save_path)
+{
+    CURLcode res;
+    FILE* fp;
+    fp = fopen(save_path.c_str(), "wb");
+    if (!fp) {
+        return 1;
+    }
+    if (curl_) {
+        curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, &write_data);
+        curl_easy_setopt(curl_, CURLOPT_WRITEDATA, fp);
+        res = curl_easy_perform(curl_);
+    }
+    fclose(fp);
+    return 0;
+}
 
 bool HttpConnection::Post(const std::string& url, const std::string& data, std::string& response) {
     if (!curl_) {
@@ -49,6 +68,11 @@ bool HttpConnection::Get(const std::string& url, std::string& response) {
     CURLcode res = curl_easy_perform(curl_);
     return (res == CURLE_OK);
 };
+
+size_t HttpConnection::write_data(void* ptr, size_t size, size_t nmemb, FILE* stream) {
+    size_t written = fwrite(ptr, size, nmemb, stream);
+    return written;
+}
 
 size_t HttpConnection::WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     size_t realsize = size * nmemb;

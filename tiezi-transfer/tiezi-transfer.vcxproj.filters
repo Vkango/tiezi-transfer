@@ -39,7 +39,7 @@
     <ClCompile Include="YyJson\yyjson.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="qkjson.cpp">
+    <ClCompile Include="thread-pool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Json.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="thread-pool.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

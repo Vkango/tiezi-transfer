@@ -22,9 +22,6 @@ bool WriteFile(const string& filename, const string& write_text) {
     }
 
     fileStream << write_text;
-    //fileStream << "这是使用C++写入的文本。\n";
-
-    // 关闭文件流
     fileStream.close();
     return true;
 

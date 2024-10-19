@@ -36,7 +36,9 @@ public:
     ~HttpConnection();
     bool Post(const std::string& url, const std::string& data, std::string& response);
     bool Get(const std::string& url, std::string& response);
+    int DownloadFile(const std::string& url, const std::string& save_path);
 private:
     CURL* curl_ = nullptr;
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+    static size_t write_data(void* ptr, size_t size, size_t nmemb, FILE* stream);
 };

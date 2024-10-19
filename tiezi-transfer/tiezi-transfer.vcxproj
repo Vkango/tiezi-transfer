@@ -137,7 +137,7 @@
     <ClCompile Include="calc-md5.cpp" />
     <ClCompile Include="data-parse.cpp" />
     <ClCompile Include="file-io-string.cpp" />
-    <ClCompile Include="qkjson.cpp" />
+    <ClCompile Include="thread-pool.cpp" />
     <ClCompile Include="utf8-to-unicode.cpp" />
     <ClCompile Include="tieba-api.cpp" />
     <ClCompile Include="tiezi-transfer.cpp" />
@@ -148,6 +148,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="Json.h" />
     <ClInclude Include="lang.h" />
+    <ClInclude Include="thread-pool.h" />
     <ClInclude Include="YyJson\yyjson.h" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,10 @@
 #include "app.h"
 #include <stdlib.h> 
 #include "Windows.h"
+#include "thread-pool.h"
 using namespace std;
+
+string download_path = ".\\";
 
 std::string wstringToString(const std::wstring& wstr) {
     int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
@@ -12,7 +15,9 @@ std::string wstringToString(const std::wstring& wstr) {
     return strTo;
 }
 
-
+void download(const string& url) {
+    
+}
 
 int main()
 {
