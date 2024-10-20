@@ -62,9 +62,9 @@ vector<SubPost> ReplyInfo(const string id, const string json_str)
 	result.clear();
 	for (int i = 0; i < j["/post_list"].GetLen(); i++)
 	{
-		for (int m = 0; m < j[("/post_list/" + std::to_string(i) + "/sub_post_number").c_str()].GetInt(); m++)
+		if (j[("/post_list/" + std::to_string(i) + "/sub_post_number").c_str()].GetInt() != 0)
 		{
-			tmp.id = j[("/post_list/" + std::to_string(i) + "/id").c_str()].GetStr();
+			tmp.id = to_string (j[("/post_list/" + std::to_string(i) + "/id").c_str()].GetInt64());
 			string res = api.SubPost(id, tmp.id, 1);
 			CJson j1 = res;
 			

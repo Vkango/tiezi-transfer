@@ -7,11 +7,11 @@ struct SubPost {
     string id;
     int page;
 };
-vector<SubPost> ReplyInfo(const string id, const string json_str);
 struct MediaObject {
     string URL;
     string show_name;
 };
+
 class TieBaAPI 
 {
 public:
@@ -47,5 +47,6 @@ private:
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
     static size_t write_data(void* ptr, size_t size, size_t nmemb, FILE* stream);
 };
+vector<SubPost> ReplyInfo(const string id, const string json_str);
 
 void CreatePath(const string& dir);

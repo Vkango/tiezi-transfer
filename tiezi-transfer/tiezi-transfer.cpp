@@ -15,10 +15,18 @@ std::string wstringToString(const std::wstring& wstr) {
     return strTo;
 }
 
-void download(const MediaObject& obj) {
-    HttpConnection Conn;
-    cout << obj.show_name << " " << obj.URL << endl;
-    Conn.DownloadFile(obj.URL, download_path + "\\res\\" + obj.show_name);
+void download(string tid, SubPost downInfo) {
+    TieBaAPI t;
+    for (int i = 0; i < downInfo.page; i++)
+    {
+        wcout << L"Downloading subpost: ";
+        cout << downInfo.id;
+        wcout << L"\\";
+        cout << i;
+        wcout << L".json" << endl;
+        WriteFile(download_path + "\\res\\" + downInfo.id + "\\" + to_string(i) + ".json", t.SubPost(tid, downInfo.id, i + 1));
+    }
+
 }
 
 int main()
@@ -50,7 +58,7 @@ int main()
     CreatePath(download_path);
     CreatePath(download_path + "\\res");
     
-    wcout << L"注意：先逐个保存每一页内容，之后才会进行资源下载。" << endl;
+    wcout << L"【注意】下载完成后会自动关闭。现在开始准备资源……" << endl;
     vector<MediaObject> res;
     vector<SubPost> sp;
     for (int i = 1; i <= t.page; i++)
@@ -72,17 +80,20 @@ int main()
         wcout << L"以退出。" << endl;
         return 0;
     }
-    ThreadPool pool(1);
-    HttpConnection x;
+    ThreadPool pool(20);
+    
     for (int i = 0; i < res.size(); i++)
     {
-        //x.DownloadFile(res[i].URL, download_path + "\\res\\" + res[i].show_name);
-        pool.submit(std::bind(download, res[i]));
+        wcout << L"Downloading resource: ";
+        cout << res[i].show_name << endl;
+        auto result = pool.enqueue([](MediaObject cur) {HttpConnection x; x.DownloadFile(cur.URL, download_path + "\\res\\" + cur.show_name); }, res[i]);
     }
-    while (!pool.has_tasks()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    for (int i = 0; i < sp.size(); i++)
+    {
+        CreatePath(download_path + "\\res\\" + sp[i].id);
+        auto result = pool.enqueue([](string tid, SubPost replyInfo) {download(tid, replyInfo); }, b, sp[i]);
+        
     }
-    wcout << L"已完成。" << endl;
-    
     return 0;
 }

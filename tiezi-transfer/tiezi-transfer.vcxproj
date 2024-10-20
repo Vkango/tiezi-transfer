@@ -137,7 +137,6 @@
     <ClCompile Include="calc-md5.cpp" />
     <ClCompile Include="data-parse.cpp" />
     <ClCompile Include="file-io-string.cpp" />
-    <ClCompile Include="thread-pool.cpp" />
     <ClCompile Include="utf8-to-unicode.cpp" />
     <ClCompile Include="tieba-api.cpp" />
     <ClCompile Include="tiezi-transfer.cpp" />

@@ -39,9 +39,6 @@
     <ClCompile Include="YyJson\yyjson.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="thread-pool.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
