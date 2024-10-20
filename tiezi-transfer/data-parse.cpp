@@ -17,6 +17,9 @@ string GetFileName(const string URL)
 	size_t lastDotPos = URL.find_last_of('.');
 	if (lastSlashPos != std::string::npos && lastDotPos != std::string::npos && lastSlashPos < lastDotPos) {
 		std::string extractedText = URL.substr(lastSlashPos + 1, lastDotPos);
+		if (extractedText.find("?") != std::string::npos) {
+			extractedText.replace(extractedText.find("?"), 37, "");
+		}
 		return extractedText;
 	}
 	else {
@@ -37,6 +40,10 @@ vector<MediaObject> GetMediaInfo(const string json_str)
 			{
 			case 3:
 				tmp.URL = j[("/post_list/" + std::to_string(i) + "/content/" + std::to_string(m) + "/src").c_str()].GetStr();
+				if (j[("/post_list/" + std::to_string(i) + "/content/" + std::to_string(m) + "/origin_src").c_str()].IsValid())
+				{
+					tmp.URL = j[("/post_list/" + std::to_string(i) + "/content/" + std::to_string(m) + "/origin_src").c_str()].GetStr();
+				}
 				tmp.show_name = GetFileName(tmp.URL);
 				result.push_back(tmp);
 				break;
