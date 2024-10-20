@@ -53,3 +53,25 @@ vector<MediaObject> GetMediaInfo(const string json_str)
 
 	return result;
 }
+vector<SubPost> ReplyInfo(const string id, const string json_str)
+{
+	vector<SubPost> result;
+	SubPost tmp;
+	CJson j = json_str;
+	TieBaAPI api;
+	result.clear();
+	for (int i = 0; i < j["/post_list"].GetLen(); i++)
+	{
+		for (int m = 0; m < j[("/post_list/" + std::to_string(i) + "/sub_post_number").c_str()].GetInt(); m++)
+		{
+			tmp.id = j[("/post_list/" + std::to_string(i) + "/id").c_str()].GetStr();
+			string res = api.SubPost(id, tmp.id, 1);
+			CJson j1 = res;
+			
+			tmp.page = j1["/page/total_count"].GetInt();
+			result.push_back(tmp);
+		}
+	};
+
+	return result;
+}

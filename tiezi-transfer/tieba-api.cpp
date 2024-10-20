@@ -92,7 +92,10 @@ string TieBaAPI::Post(const string& tid, const int& page)
     
     return response;
 };
-string TieBaAPI::SubPost(const string& tid, const int& post_id)
+string TieBaAPI::SubPost(const string& tid, const string& post_id, const int& page)
 {
-    return "";
+    HttpConnection Conn;
+    string response;
+    Conn.Post("http://c.tieba.baidu.com/c/f/pb/floor", CalcSign("kz=" + tid + "&pid=" + post_id + "&pn=" + to_string(page)), response);
+    return response;
 };

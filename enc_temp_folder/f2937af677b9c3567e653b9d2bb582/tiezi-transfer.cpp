@@ -83,6 +83,7 @@ int main()
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     wcout << L"已完成。" << endl;
+        // 循环等待任务是否完成
     
     return 0;
 }

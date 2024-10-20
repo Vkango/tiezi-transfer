@@ -3,6 +3,11 @@
 #include "Windows.h"
 #include<vector>
 using namespace std;
+struct SubPost {
+    string id;
+    int page;
+};
+vector<SubPost> ReplyInfo(const string id, const string json_str);
 struct MediaObject {
     string URL;
     string show_name;
@@ -12,7 +17,7 @@ class TieBaAPI
 public:
     string CalcSign(const string &data);
     string Post(const string& tid, const int& page);
-    string SubPost(const string& tid, const int& post_id);
+    string SubPost(const string& tid, const string& post_id, const int& page);
 };
 class URL_Code
 {
@@ -42,3 +47,5 @@ private:
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
     static size_t write_data(void* ptr, size_t size, size_t nmemb, FILE* stream);
 };
+
+void CreatePath(const string& dir);

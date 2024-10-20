@@ -1,5 +1,11 @@
 #include <fstream> 
+#include <filesystem>
 #include "app.h"
+namespace fs = std::filesystem;
+
+void CreatePath(const string& dir) {
+    system(("md " + dir).c_str());
+}
 string ReadFile(const string& filename) {
     std::ifstream inFile(filename);
     if (!inFile) {

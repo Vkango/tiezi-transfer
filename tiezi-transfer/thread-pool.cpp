@@ -13,13 +13,17 @@ ThreadPool::~ThreadPool() {
         worker.join();
     }
 }
-template<class FunctionType>
-void ThreadPool::submit(FunctionType f) {
-    {
-        std::unique_lock<std::mutex> lock(task_mutex);
-        tasks.emplace(std::move(f));
-    }
-    cv.notify_one();
-}
 
-template void ThreadPool::submit<std::function<void()>>(std::function<void()>);
+void ThreadPool::worker_thread() {
+    while (!done) {
+        Task task;
+        {
+            std::unique_lock<std::mutex> lock(task_mutex);
+            cv.wait(lock, [this] { return !tasks.empty() || done; });
+            if (done && tasks.empty()) return;
+            task = std::move(tasks.front());
+            tasks.pop();
+        }
+        task();
+    }
+}
